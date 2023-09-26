@@ -419,6 +419,8 @@ under the License.
 							<classpathScope>test</classpathScope>
 							<executable>${executableJava}</executable>
 							<arguments>
+								<argument>--add-opens</argument>
+								<argument>java.base/java.util=ALL-UNNAMED</argument>
 								<argument>-classpath</argument>
 								<classpath/>
 								<argument>org.openjdk.jmh.Main</argument>
@@ -429,8 +431,6 @@ under the License.
 								<argument>${benchmarkExcludes}</argument>
 								<argument>-rf</argument>
 								<argument>csv</argument>
-								<argument>-jvmArgsAppend</argument>
-								<argument>"--add-opens java.base/java.util=ALL-UNNAMED"</argument>
 								<argument>${benchmarks}</argument>
 							</arguments>
 						</configuration>
