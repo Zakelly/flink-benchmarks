@@ -292,6 +292,7 @@ under the License.
 							<classpathScope>test</classpathScope>
 							<executable>${executableJava}</executable>
 							<arguments>
+								<argument>-Xbatch</argument>
 								<argument>-Xmx6g</argument>
 								<argument>-classpath</argument>
 								<classpath/>
@@ -342,6 +343,7 @@ under the License.
 							<classpathScope>test</classpathScope>
 							<executable>${executableJava}</executable>
 							<arguments>
+								<argument>-Xbatch</argument>
 								<argument>-classpath</argument>
 								<classpath/>
 								<argument>org.openjdk.jmh.Main</argument>
