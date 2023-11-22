@@ -292,7 +292,8 @@ under the License.
 							<classpathScope>test</classpathScope>
 							<executable>${executableJava}</executable>
 							<arguments>
-								<argument>-Xint</argument>
+								<argument>-XX:+UnlockDiagnosticVMOptions</argument>
+								<argument>-XX:CompileCommand=print,*RocksDBListState.addAll</argument>
 								<argument>-Xmx6g</argument>
 								<argument>-classpath</argument>
 								<classpath/>
@@ -343,7 +344,8 @@ under the License.
 							<classpathScope>test</classpathScope>
 							<executable>${executableJava}</executable>
 							<arguments>
-								<argument>-Xint</argument>
+								<argument>-XX:+UnlockDiagnosticVMOptions</argument>
+								<argument>-XX:CompileCommand=print,*RocksDBListState.addAll</argument>
 								<argument>-classpath</argument>
 								<classpath/>
 								<argument>org.openjdk.jmh.Main</argument>

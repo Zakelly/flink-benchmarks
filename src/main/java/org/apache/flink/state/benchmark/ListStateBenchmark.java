@@ -18,6 +18,9 @@
 
 package org.apache.flink.state.benchmark;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.flink.api.common.state.ListState;
 import org.apache.flink.api.common.state.ListStateDescriptor;
 import org.apache.flink.contrib.streaming.state.RocksDBKeyedStateBackend;
@@ -33,6 +36,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.VerboseMode;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,6 +55,8 @@ public class ListStateBenchmark extends StateBenchmarkBase {
             new ListStateDescriptor<>(STATE_NAME, Long.class);
     private ListState<Long> listState;
     private List<Long> dummyLists;
+
+    private File instanceBasePath;
 
     public static void main(String[] args) throws RunnerException {
         Options opt =
@@ -70,6 +77,13 @@ public class ListStateBenchmark extends StateBenchmarkBase {
             dummyLists.add(random.nextLong());
         }
         keyIndex = new AtomicInteger();
+        if (keyedStateBackend instanceof RocksDBKeyedStateBackend) {
+            RocksDBKeyedStateBackend<Long> rocksDBKeyedStateBackend =
+                    (RocksDBKeyedStateBackend<Long>) keyedStateBackend;
+            Field field = RocksDBKeyedStateBackend.class.getDeclaredField("instanceBasePath");
+            field.setAccessible(true);
+            instanceBasePath = (File) field.get(rocksDBKeyedStateBackend);
+        }
     }
 
     @Setup(Level.Iteration)
@@ -85,6 +99,7 @@ public class ListStateBenchmark extends StateBenchmarkBase {
             RocksDBKeyedStateBackend<Long> rocksDBKeyedStateBackend =
                     (RocksDBKeyedStateBackend<Long>) keyedStateBackend;
             compactState(rocksDBKeyedStateBackend, STATE_DESC);
+            System.out.println(FileUtils.listFilesAndDirs(instanceBasePath, FileFilterUtils.suffixFileFilter(".sst"), TrueFileFilter.TRUE));
         }
     }
 
