@@ -18,12 +18,7 @@
 
 package org.apache.flink.scheduler.benchmark;
 
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -45,6 +40,7 @@ import java.util.concurrent.TimeUnit;
             "-Dcom.sun.management.jmxremote.ssl=false",
             "-Dcom.sun.management.jmxremote.ssl"
         })
+@Warmup(iterations = 10)
 public class SchedulerBenchmarkExecutorBase {
 
     public static void runBenchmark(Class<?> clazz) throws RunnerException {
