@@ -68,6 +68,7 @@ under the License.
 		<benchmarks>.*</benchmarks>
 		<executableJava>java</executableJava>
 		<jmhProfArgument> </jmhProfArgument>
+		<profResultPath>./profile-result/</profResultPath>
 	</properties>
 
 	<repositories>
@@ -553,7 +554,7 @@ under the License.
 			</activation>
 			<id>enable-async-profiler</id>
 			<properties>
-				<jmhProfArgument>async:libPath=${asyncProfilerLib};output=flamegraph;dir=/tmp/profile-results</jmhProfArgument>
+				<jmhProfArgument>async:libPath=${asyncProfilerLib};output=flamegraph;dir=${profResultPath}</jmhProfArgument>
 			</properties>
 		</profile>
 	</profiles>
